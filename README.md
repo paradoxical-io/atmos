@@ -262,7 +262,7 @@ implicit val retryPolicy = retryForever using selectedBackoff {
 }
 ```
 
-Finally, any backoff policy can be configured so that each successive backoff duration is perturbed by a random value:
+Any backoff policy can be configured so that each successive backoff duration is perturbed by a random value:
 
 ```scala
 import scala.concurrent.duration._
@@ -273,6 +273,25 @@ implicit val retryPolicy = retryForever using { constantBackoff { 1 second } ran
 
 // Randomizes each backoff duration by adding a random duration between -30 seconds and 30 seconds.
 val otherRetryPolicy = retryForever using { linearBackoff { 5 minutes } randomized -30.seconds -> 30.seconds }
+```
+
+Backoff policies can be capped at a maximal value:
+
+```scala
+import scala.concurrent.duration._
+import atmos.dsl._
+
+// Waits 4 minutes, 8 minutes, then 10 minutes, 10 minutes, 10 minutes ... 
+val policy = retryForever using { exponentialBackoff { 4.minutes } capped 10.minutes }
+```
+
+Finally, backoff policies can have random jitter applied:
+```scala
+import scala.concurrent.duration._
+import atmos.dsl._
+
+// Waits some random time between 0 and 4 minutes, 8 minutes, 16 minutes ...
+val policy = retryForever using { exponentialBackoff { 4.minutes } withJitter }
 ```
 
 <a name="event-monitors"></a>
