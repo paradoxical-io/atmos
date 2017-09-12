@@ -23,7 +23,7 @@ import scala.util.Try
 /**
  * A policy that uses the same backoff after every retry.
  *
- * @param initialBackoff The backoff used for every retry.
+ * @param backoff The backoff used for every retry.
  */
 case class ConstantBackoff(backoff: FiniteDuration = defaultBackoff) extends atmos.BackoffPolicy {
 

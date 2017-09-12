@@ -42,4 +42,15 @@ case class BackoffPolicyExtensions(self: BackoffPolicy) extends AnyVal {
    */
   def randomized(range: (FiniteDuration, FiniteDuration)): BackoffPolicy = backoff.RandomizedBackoff(self, range)
 
+  /**
+   * Creates a backoff policy that caps the result of `self`.
+   *
+   * @param cap The maximum backoff to be returned by this policy
+   */
+  def capped(cap: FiniteDuration): BackoffPolicy = backoff.CappedBackoff(self, cap)
+
+  /**
+   * Creates a backoff policy that adds jitter to `self`.
+   */
+  def withJitter = backoff.JitterBackoff(self)
 }
