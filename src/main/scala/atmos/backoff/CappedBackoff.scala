@@ -5,7 +5,6 @@ import atmos.BackoffPolicy
 import scala.concurrent.duration.FiniteDuration
 import scala.util.Try
 
-
 /**
   * A policy that uses the minimum of either the cap or the result of the base policy.
   *
