@@ -232,7 +232,7 @@ implicit val retryPolicy = retryForever using constantBackoff { 5 millis }
 // Wait 5 seconds after the first attempt, then 10 seconds, then 15 seconds and so on.
 val otherRetryPolicy = retryForever using linearBackoff { 5 seconds }
 
-// Wait 5 minites after the first attempt, then 10 seconds, then 20 seconds and so on.
+// Wait 5 minutes after the first attempt, then 10 minutes, then 20 minutes and so on.
 val anotherRetryPolicy = retryForever using exponentialBackoff { 5 minutes }
 
 // Wait 5 hours after the first attempt, then repeatedly multiply by the golden ratio after subsequent attempts.
