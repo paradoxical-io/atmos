@@ -67,6 +67,9 @@ class RetryDSLSpec extends FlatSpec with Matchers with MockFactory {
     val max = 10.millis
     retrying using LinearBackoff().randomized(max) shouldEqual RetryPolicy(backoff = RandomizedBackoff(LinearBackoff(), zero -> max))
     retrying using LinearBackoff().randomized(min -> max) shouldEqual RetryPolicy(backoff = RandomizedBackoff(LinearBackoff(), min -> max))
+    val cap = 10.millis
+    retrying using LinearBackoff().capped(cap) shouldEqual RetryPolicy(backoff = CappedBackoff(LinearBackoff(), cap))
+    retrying using LinearBackoff().withJitter shouldEqual RetryPolicy(backoff = JitterBackoff(LinearBackoff()))
   }
 
   it should "configure retry policies with event monitors" in {
