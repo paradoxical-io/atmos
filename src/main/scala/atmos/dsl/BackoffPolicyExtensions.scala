@@ -52,5 +52,5 @@ case class BackoffPolicyExtensions(self: BackoffPolicy) extends AnyVal {
   /**
    * Creates a backoff policy that adds jitter to `self`.
    */
-  def withJitter = backoff.JitterBackoff(self)
+  def withJitter: BackoffPolicy = backoff.JitterBackoff(self)
 }
