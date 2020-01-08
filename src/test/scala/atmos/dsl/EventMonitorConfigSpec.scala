@@ -85,8 +85,8 @@ class EventMonitorConfigSpec extends FlatSpec with Matchers with MockFactory {
     import LogEventsWithSlf4j.Slf4jLevel
     import Slf4jSupport._
     val target = mock[MockSlf4jLogger]
-    (target.isInfoEnabled _).expects().returns(true).anyNumberOfTimes
-    (target.isWarnEnabled _).expects().returns(true).anyNumberOfTimes
+    (target.isInfoEnabled _: () => Boolean).expects().returns(true).anyNumberOfTimes
+    (target.isWarnEnabled _: () => Boolean).expects().returns(true).anyNumberOfTimes
     new TestCase[Slf4jLogger, LogEventsWithSlf4j, LogAction[Slf4jLevel]] {
       override def expect(action: LogAction[Slf4jLevel]) = action match {
         case LogAction.LogAt(Slf4jLevel.Info) => (target.info(_: String, _: Throwable)).expects(*, *) once

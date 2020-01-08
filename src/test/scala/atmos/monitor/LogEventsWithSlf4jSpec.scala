@@ -49,11 +49,11 @@ class LogEventsWithSlf4jSpec extends FlatSpec with Matchers with MockFactory {
     val logger = mock[MockLogger]
 
     def expectIsEnabledOnce(enabled: Boolean) = level match {
-      case Slf4jLevel.Error => (logger.isErrorEnabled _).expects().returns(enabled).once
-      case Slf4jLevel.Warn => (logger.isWarnEnabled _).expects().returns(enabled).once
-      case Slf4jLevel.Info => (logger.isInfoEnabled _).expects().returns(enabled).once
-      case Slf4jLevel.Debug => (logger.isDebugEnabled _).expects().returns(enabled).once
-      case Slf4jLevel.Trace => (logger.isTraceEnabled _).expects().returns(enabled).once
+      case Slf4jLevel.Error => (logger.isErrorEnabled _: () => Boolean).expects().returns(enabled).once
+      case Slf4jLevel.Warn => (logger.isWarnEnabled _: () => Boolean).expects().returns(enabled).once
+      case Slf4jLevel.Info => (logger.isInfoEnabled _: () => Boolean).expects().returns(enabled).once
+      case Slf4jLevel.Debug => (logger.isDebugEnabled _: () => Boolean).expects().returns(enabled).once
+      case Slf4jLevel.Trace => (logger.isTraceEnabled _: () => Boolean).expects().returns(enabled).once
     }
 
     def expectLogOnce(message: String, thrown: Option[Throwable]) = thrown match {
